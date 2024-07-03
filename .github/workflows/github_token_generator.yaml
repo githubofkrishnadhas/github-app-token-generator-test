@@ -27,8 +27,8 @@ jobs:
           python-version: '3.11'
       - name: Pipenv venv installation
         run: |
-          pip install pipenv 
-          pipenv install --skip-lock
+          pip install poetry 
+          poetry install
       - name: Token generator
         uses: githubofkrishnadhas/github-access-using-githubapp@v1
         with:
@@ -38,7 +38,7 @@ jobs:
 
       - name: Execute python program
         run: |
-          pipenv run python3 label.py --repo ${{ github.repository }} --label_name ${{ inputs.label_name }}
+          poetry run python3 label.py --repo ${{ github.repository }} --label_name ${{ inputs.label_name }}
       - name: program execution completed
         run: echo "program execution completed"
 
