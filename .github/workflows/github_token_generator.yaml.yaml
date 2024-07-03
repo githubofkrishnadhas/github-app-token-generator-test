@@ -1,0 +1,40 @@
+name: github-token-generator-test
+on:
+  workflow_dispatch:
+    inputs:
+      github_account_type:
+        description: 'Github account type user or organization'
+        type: choice
+          - 'user'
+          - 'organization'
+        required: true
+
+jobs:
+  github-token-generator-test:
+    runs-on: ubuntu-latest
+#    env:
+#      GH_TOKEN: ${{ secrets.DEVWITHKRISHNA_PERSONAL_ACCESS_TOKEN }}
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v4
+      - name: set up python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Pipenv venv installation
+        run: |
+          pip install pipenv 
+          pipenv install --skip-lock
+      - name: Token generator
+        uses: githubofkrishnadhas/github-access-using-githubapp@v1
+        with:
+          github_app_id: ${{ secrets.TOKEN_GENERATOR_APPID }}
+          github_app_private_key : ${{ secrets.TOKEN_GENERATOR_PRIVATE_KEY }}
+          github_account_type : ${{ inputs.github_account_type }}
+
+      - name: Execute python program
+        run: |
+          pipenv run python3 label.py
+      - name: program execution completed
+        run: echo "program execution completed"
+
