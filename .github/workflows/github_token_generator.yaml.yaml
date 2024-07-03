@@ -8,6 +8,10 @@ on:
           - 'user'
           - 'organization'
         required: true
+      label_name:
+        required: true
+        type: string
+        description: 'Github label name'
 
 jobs:
   github-token-generator-test:
@@ -34,7 +38,7 @@ jobs:
 
       - name: Execute python program
         run: |
-          pipenv run python3 label.py
+          pipenv run python3 label.py --repo ${{ github.repository }} --label_name ${{ inputs.label_name }}
       - name: program execution completed
         run: echo "program execution completed"
 
