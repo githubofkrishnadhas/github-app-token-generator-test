@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 def create_github_label(repo:str, label_name:str):
     url = f"https://api.github.com/repos/{repo}/labels"
     headers = {
-        "Authorization": f"token {os.getenv('GH_TOKEN')}",
+        "Authorization": f"token {os.getenv('GH_APP_TOKEN')}",
         "Accept": "application/vnd.github.v3+json"
     }
     payload = {
